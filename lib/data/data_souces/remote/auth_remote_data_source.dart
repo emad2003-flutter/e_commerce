@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/errors/fialures.dart';
+import 'package:e_commerce/data/models/login_response_dto.dart';
 import 'package:e_commerce/domain/entities/register_response_entity.dart';
 
 abstract class AuthRemoteDataSource {
@@ -9,5 +10,10 @@ abstract class AuthRemoteDataSource {
     String password,
     String rePassword,
     String phone,
+  );
+
+  Future<Either<Failure, LoginResponseDto>> login(
+    String email,
+    String password,
   );
 }

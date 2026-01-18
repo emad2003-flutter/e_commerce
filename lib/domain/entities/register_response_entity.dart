@@ -1,13 +1,18 @@
 class RegisterResponseEntity {
   String? message;
-  UserEntity? user;
+  RegisterUserEntity? registerUserEntity;
   String? token;
   String? statusMsg;
-  RegisterResponseEntity({this.message, this.user, this.token, this.statusMsg});
+  RegisterResponseEntity({
+    this.message,
+    this.registerUserEntity,
+    this.token,
+    this.statusMsg,
+  });
 }
 
-  class UserEntity {
-    String? name;
+class RegisterUserEntity {
+  String? name;
   String? email;
-  UserEntity({this.name, this.email});
+  RegisterUserEntity({this.name, this.email});
 }

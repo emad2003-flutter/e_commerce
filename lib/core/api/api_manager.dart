@@ -10,7 +10,11 @@ class ApiManager {
     required String endPoint,
     Map<String, dynamic>? query,
   }) {
-    return dio.get(ApiConstants.baseUrl + endPoint, queryParameters: query);
+    return dio.get(
+      ApiConstants.baseUrl + endPoint,
+      queryParameters: query,
+      options: Options(validateStatus: (status) => true),
+    );
   }
 
   Future<Response> postData({
@@ -22,6 +26,7 @@ class ApiManager {
       ApiConstants.baseUrl + endPoint,
       queryParameters: query,
       data: data,
+      options: Options(validateStatus: (status) => true),
     );
   }
 }
