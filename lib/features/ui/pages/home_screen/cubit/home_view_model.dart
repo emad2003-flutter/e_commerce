@@ -1,3 +1,4 @@
+import 'package:e_commerce/domain/use_cases/categories_use_case.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/cubit/home_states.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/categories_tap/category_tap_.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/favorate_tap/favorate_tap.dart';
@@ -9,8 +10,10 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class HomeViewModel extends Cubit<HomeStates> {
-  HomeViewModel() : super(InitialState());
+  CategoriesUseCase categoriesUseCase;
+  HomeViewModel(this.categoriesUseCase) : super(InitialState());
   int selectedIndex = 0;
+  var Categories;
 
   List<Widget> homeTaps = [
     HomeTap(),
