@@ -1,8 +1,12 @@
-class CategoriesResponseEntity {
+class CategoriesOrBrandsResponseEntity {
   int? results;
   String? message;
   List<DataEntity>? dataEntity;
-  CategoriesResponseEntity({this.results, this.dataEntity, this.message});
+  CategoriesOrBrandsResponseEntity({
+    this.results,
+    this.dataEntity,
+    this.message,
+  });
 }
 
 class DataEntity {

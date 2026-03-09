@@ -3,26 +3,25 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/api/api_manager.dart';
 import 'package:e_commerce/core/api/end_points.dart';
 import 'package:e_commerce/core/errors/fialures.dart';
-import 'package:e_commerce/data/data_souces/remote/categories_remote_data_source.dart';
+import 'package:e_commerce/data/data_souces/remote/brands_remote_data_source.dart';
 import 'package:e_commerce/data/models/categories_or_brands_response_dto.dart';
 import 'package:e_commerce/domain/entities/categories_or_brands_response_entity.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: CategoriesRemoteDataSource)
-class CategoriesRemoteDataSourceImpl extends CategoriesRemoteDataSource {
-  CategoriesRemoteDataSourceImpl({required this.apiManager});
+@Injectable(as: BrandsRemoteDataSource)
+class BrandsRemoteDataSourceImpl implements BrandsRemoteDataSource {
+  BrandsRemoteDataSourceImpl({required this.apiManager});
   ApiManager apiManager;
-
   @override
   Future<Either<Failure, CategoriesOrBrandsResponseEntity>>
-  getCategories() async {
+  getAllBrands() async {
     try {
       final List<ConnectivityResult> connectivityResult = await Connectivity()
           .checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         var response = await apiManager.getData(
-          endPoint: EndPoints.getAllCategories,
+          endPoint: EndPoints.getAllBrands,
         );
         var categoriesResponse = CategoriesResponseDto.fromJson(response.data);
 

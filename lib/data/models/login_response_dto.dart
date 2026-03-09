@@ -15,20 +15,20 @@ class LoginResponseDto extends LoginResponseEntity {
   LoginResponseDto.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     loginUserDto = json['loginUserDto'] != null
-        ? new LoginUserDto.fromJson(json['loginUserDto'])
+        ? LoginUserDto.fromJson(json['loginUserDto'])
         : null;
     token = json['token'];
     statusMsg = json['statusMsg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.loginUserDto != null) {
-      data['loginUserDto'] = this.loginUserDto!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    if (loginUserDto != null) {
+      data['loginUserDto'] = loginUserDto!.toJson();
     }
-    data['token'] = this.token;
-    data['statusMsg'] = this.statusMsg;
+    data['token'] = token;
+    data['statusMsg'] = statusMsg;
     return data;
   }
 }
@@ -45,10 +45,10 @@ class LoginUserDto extends UserEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['role'] = this.role;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['email'] = email;
+    data['role'] = role;
     return data;
   }
 }

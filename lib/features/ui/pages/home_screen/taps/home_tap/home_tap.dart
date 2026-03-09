@@ -2,7 +2,7 @@ import 'package:e_commerce/core/di/di.dart';
 import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
-import 'package:e_commerce/domain/entities/categories_response_entity.dart';
+import 'package:e_commerce/domain/entities/categories_or_brands_response_entity.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/home_tap/cubit/home_tap_states.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/home_tap/cubit/home_tap_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,38 +11,54 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class HomeTap extends StatelessWidget {
-  HomeTap({super.key});
+class HomeTap extends StatefulWidget {
+  const HomeTap({super.key});
+
+  @override
+  State<HomeTap> createState() => _HomeTapState();
+}
+
+class _HomeTapState extends State<HomeTap> {
   HomeTapViewModel viewModel = getIt<HomeTapViewModel>();
 
   @override
+  void initState() {
+    super.initState();
+    viewModel.fetchCategories();
+    viewModel.fetchBrands();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeTapViewModel, HomeTapStates>(
-      bloc: viewModel..fetchCategories(),
-      builder: (context, state) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 12.h),
-            child: Column(
-              children: [
-                _announcementSection(),
-                SizedBox(height: 24.h),
-                state is CategoriesLoaded
-                    ? _categoriesSection(state.categoriesResponseEntity)
-                    : state is CategoriesError
-                    ? Text(state.message, style: AppStyles.medium14PrimaryDark)
-                    : CircularProgressIndicator(),
-                SizedBox(height: 24.h),
-                state is CategoriesLoaded
-                    ? _brandsSection(state.categoriesResponseEntity)
-                    : state is CategoriesError
-                    ? Text(state.message, style: AppStyles.medium14PrimaryDark)
-                    : CircularProgressIndicator(),
-              ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 12.h),
+        child: Column(
+          children: [
+            _announcementSection(),
+            SizedBox(height: 24.h),
+            BlocBuilder<HomeTapViewModel, HomeTapStates>(
+              bloc: viewModel,
+              builder: (context, state) {
+                return viewModel.categoriesResponseEntity == null
+                    ? CircularProgressIndicator()
+                    : _categoriesSection(viewModel.categoriesResponseEntity!);
+              },
             ),
-          ),
-        );
-      },
+            SizedBox(height: 24.h),
+            BlocBuilder<HomeTapViewModel, HomeTapStates>(
+              bloc: viewModel,
+              builder: (context, state) {
+                return state is BrandsLoaded
+                    ? _brandsSection(state.categoriesOrBrandsResponseEntity)
+                    : state is BrandsError
+                    ? Text(state.message)
+                    : CircularProgressIndicator();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -58,18 +74,20 @@ class HomeTap extends StatelessWidget {
         initialPage: 0,
         indicatorColor: AppColors.primaryColor,
         indicatorBackgroundColor: Colors.grey,
+        autoPlayInterval: 3000,
+        isLoop: true,
         children: [
           Image.asset(AppAssets.announcement1, fit: BoxFit.cover),
           Image.asset(AppAssets.announcement2, fit: BoxFit.cover),
           Image.asset(AppAssets.announcement3, fit: BoxFit.cover),
         ],
-        autoPlayInterval: 3000,
-        isLoop: true,
       ),
     );
   }
 
-  Widget _categoriesSection(CategoriesResponseEntity categoriesResponseEntity) {
+  Widget _categoriesSection(
+    CategoriesOrBrandsResponseEntity categoriesOrBrandsResponseEntity,
+  ) {
     return Column(
       children: [
         Row(
@@ -89,7 +107,7 @@ class HomeTap extends StatelessWidget {
           ],
         ),
         SizedBox(height: 12.h),
-        Container(
+        SizedBox(
           height: 300.h,
           width: double.infinity,
           child: GridView.builder(
@@ -100,11 +118,11 @@ class HomeTap extends StatelessWidget {
               childAspectRatio: 1.5,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: categoriesResponseEntity.dataEntity?.length ?? 0,
+            itemCount: categoriesOrBrandsResponseEntity.dataEntity?.length ?? 0,
             itemBuilder: (context, index) {
               return _categoryItem(
-                categoriesResponseEntity.dataEntity![index].image ?? "",
-                categoriesResponseEntity.dataEntity![index].name ?? "",
+                categoriesOrBrandsResponseEntity.dataEntity![index].image ?? "",
+                categoriesOrBrandsResponseEntity.dataEntity![index].name ?? "",
               );
             },
           ),
@@ -113,7 +131,9 @@ class HomeTap extends StatelessWidget {
     );
   }
 
-  Widget _brandsSection(CategoriesResponseEntity categoriesResponseEntity) {
+  Widget _brandsSection(
+    CategoriesOrBrandsResponseEntity categoriesOrBrandsResponseEntity,
+  ) {
     return Column(
       children: [
         Row(
@@ -133,7 +153,7 @@ class HomeTap extends StatelessWidget {
           ],
         ),
         SizedBox(height: 12.h),
-        Container(
+        SizedBox(
           height: 300.h,
           width: double.infinity,
           child: GridView.builder(
@@ -144,11 +164,11 @@ class HomeTap extends StatelessWidget {
               childAspectRatio: 1.5,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: categoriesResponseEntity.dataEntity?.length ?? 0,
+            itemCount: categoriesOrBrandsResponseEntity.dataEntity?.length ?? 0,
             itemBuilder: (context, index) {
               return _categoryItem(
-                categoriesResponseEntity.dataEntity![index].image ?? "",
-                categoriesResponseEntity.dataEntity![index].name ?? "",
+                categoriesOrBrandsResponseEntity.dataEntity![index].image ?? "",
+                categoriesOrBrandsResponseEntity.dataEntity![index].name ?? "",
               );
             },
           ),

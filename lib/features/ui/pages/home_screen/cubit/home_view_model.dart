@@ -1,6 +1,6 @@
 import 'package:e_commerce/domain/use_cases/categories_use_case.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/cubit/home_states.dart';
-import 'package:e_commerce/features/ui/pages/home_screen/taps/categories_tap/category_tap_.dart';
+import 'package:e_commerce/features/ui/pages/home_screen/taps/products_tap/products_tap.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/favorate_tap/favorate_tap.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/home_tap/home_tap.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/pofile_tap/profile_tap.dart';
@@ -17,11 +17,11 @@ class HomeViewModel extends Cubit<HomeStates> {
 
   List<Widget> homeTaps = [
     HomeTap(),
-    CategoryTap(),
+    ProductsTap(),
     FavorateTap(),
     ProfileTap(),
   ];
-  pageChange(int index) {
+  void pageChange(int index) {
     selectedIndex = index;
     emit(PageChanged());
   }

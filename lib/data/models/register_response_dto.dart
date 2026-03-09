@@ -11,7 +11,7 @@ class RegisterResponseDto extends RegisterResponseEntity {
   RegisterResponseDto.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     registerUserEntity = json['registerUserEntity'] != null
-        ? new RegisterUserDto.fromJson(json['registerUserEntity'])
+        ? RegisterUserDto.fromJson(json['registerUserEntity'])
         : null;
     token = json['token'];
     statusMsg = json['statusMsg'];
@@ -30,10 +30,10 @@ class RegisterUserDto extends RegisterUserEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['role'] = this.role;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['email'] = email;
+    data['role'] = role;
     return data;
   }
 }
