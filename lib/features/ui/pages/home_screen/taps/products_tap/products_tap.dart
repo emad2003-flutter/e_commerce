@@ -5,6 +5,23 @@ class ProductsTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Products")));
+    return Scaffold(
+      body: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 0.75,
+        ),
+        children: [
+          ProductTabItem(),
+          ProductTabItem(),
+          ProductTabItem(),
+          ProductTabItem(),
+          ProductTabItem(),
+          ProductTabItem(),
+        ],
+      ),
+    );
   }
 }
