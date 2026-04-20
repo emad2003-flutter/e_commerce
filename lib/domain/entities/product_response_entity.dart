@@ -40,7 +40,7 @@ class ProductEntity {
   String? imageCover;
   CategoriesOrBrandsResponseEntity? category;
   CategoriesOrBrandsResponseEntity? brand;
-  double? ratingsAverage;
+  num? ratingsAverage;
   String? createdAt;
   String? updatedAt;
   String? id;
