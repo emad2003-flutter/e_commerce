@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/di/di.dart';
+import 'package:e_commerce/core/utils/app_routes.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/products_tap/cubit/products_states.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/products_tap/cubit/products_view_model.dart';
 import 'package:e_commerce/features/ui/widgets/product_item.dart';
@@ -29,7 +30,16 @@ class ProductsTap extends StatelessWidget {
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
-                return ProductTabItem(product: products[index]);
+                return InkWell(
+                  child: ProductTabItem(product: products[index]),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.productDetailsRoute,
+                      arguments: products[index],
+                    );
+                  },
+                );
               },
             );
           } else if (state is ProductsErrorState) {
