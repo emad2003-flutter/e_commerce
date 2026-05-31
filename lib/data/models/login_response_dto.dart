@@ -1,14 +1,13 @@
 import 'package:e_commerce/domain/entities/login_response_entity.dart';
 
 class LoginResponseDto extends LoginResponseEntity {
-  String? token;
   String? statusMsg;
   LoginUserDto? loginUserDto;
 
   LoginResponseDto({
     super.message,
     this.loginUserDto,
-    this.token,
+    super.token,
     this.statusMsg,
   });
 

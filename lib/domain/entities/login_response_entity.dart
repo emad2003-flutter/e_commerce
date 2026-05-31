@@ -1,7 +1,8 @@
 class LoginResponseEntity {
   String? message;
   UserEntity? user;
-  LoginResponseEntity({this.message, this.user});
+  String? token;
+  LoginResponseEntity({this.message, this.user, this.token});
 }
 
 class UserEntity {

@@ -16,4 +16,8 @@ abstract class AuthRepository {
     String email,
     String password,
   );
+
+  Future<void> setToken(String token);
+
+  Future<String> getToken();
 }

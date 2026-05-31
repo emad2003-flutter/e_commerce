@@ -1,3 +1,5 @@
+import 'package:e_commerce/domain/use_cases/get_token_use_case.dart';
+import 'package:e_commerce/domain/use_cases/set_token_use_case.dart';
 import 'package:e_commerce/features/ui/auth/register/cubit/register_states.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +9,14 @@ import 'package:e_commerce/domain/use_cases/register_use_case.dart';
 @injectable
 class RegisterViewModel extends Cubit<RegisterState> {
   final RegisterUseCase registerUseCase;
+  final SetTokenUseCase setTokenUseCase;
+  final GetTokenUseCase getTokenUseCase;
 
-  RegisterViewModel({required this.registerUseCase})
-    : super(RegisterInitialStates());
+  RegisterViewModel({
+    required this.registerUseCase,
+    required this.setTokenUseCase,
+    required this.getTokenUseCase,
+  }) : super(RegisterInitialStates());
 
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -35,5 +42,13 @@ class RegisterViewModel extends Cubit<RegisterState> {
         ),
       );
     }
+  }
+
+  Future<void> SetToken(String token) async {
+    await setTokenUseCase.call(token);
+  }
+
+  Future<String> getToken() async {
+    return await getTokenUseCase.call();
   }
 }

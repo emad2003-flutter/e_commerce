@@ -45,6 +45,7 @@ class LoginScreen extends StatelessWidget {
         negActionName: "OK",
       );
     } else if (state is LoginSuccess) {
+      viewModel.SetToken(state.loginResponseEntity.token ?? "");
       DialogUtils.hideLoading(context);
       DialogUtils.showMessage(
         context: context,
