@@ -1,5 +1,5 @@
-import 'package:e_commerce/domain/use_cases/get_token_use_case.dart';
-import 'package:e_commerce/domain/use_cases/set_token_use_case.dart';
+import 'package:e_commerce/core/utils/app_consts.dart';
+import 'package:e_commerce/core/utils/shared_pref_helper.dart';
 import 'package:e_commerce/features/ui/auth/register/cubit/register_states.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,14 +9,9 @@ import 'package:e_commerce/domain/use_cases/register_use_case.dart';
 @injectable
 class RegisterViewModel extends Cubit<RegisterState> {
   final RegisterUseCase registerUseCase;
-  final SetTokenUseCase setTokenUseCase;
-  final GetTokenUseCase getTokenUseCase;
 
-  RegisterViewModel({
-    required this.registerUseCase,
-    required this.setTokenUseCase,
-    required this.getTokenUseCase,
-  }) : super(RegisterInitialStates());
+  RegisterViewModel({required this.registerUseCase})
+    : super(RegisterInitialStates());
 
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -35,20 +30,18 @@ class RegisterViewModel extends Cubit<RegisterState> {
         rePasswordController.text,
         phoneController.text,
       );
-      either.fold(
-        (failure) => emit(RegisterErrorStates(failure: failure)),
-        (registerResponseEntity) => emit(
+      either.fold((failure) => emit(RegisterErrorStates(failure: failure)), (
+        registerResponseEntity,
+      ) {
+        emit(
           RegisterSuccessStates(registerResponseEntity: registerResponseEntity),
-        ),
-      );
+        );
+        saveToken(registerResponseEntity.token ?? "");
+      });
     }
   }
 
-  Future<void> SetToken(String token) async {
-    await setTokenUseCase.call(token);
-  }
-
-  Future<String> getToken() async {
-    return await getTokenUseCase.call();
+  Future<void> saveToken(String token) async {
+    await SharedPrefHelper.setData(AppConsts.userToken, token);
   }
 }

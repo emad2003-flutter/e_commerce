@@ -1,3 +1,3 @@
 class AppConsts {
-  static const String tokenKey = 'auth_token';
+  static const String userToken = 'user_token';
 }

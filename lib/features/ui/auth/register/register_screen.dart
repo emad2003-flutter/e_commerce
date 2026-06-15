@@ -46,7 +46,6 @@ class RegisterScreen extends StatelessWidget {
         negActionName: "OK",
       );
     } else if (state is RegisterSuccessStates) {
-      viewModel.SetToken(state.registerResponseEntity.token ?? "");
       DialogUtils.hideLoading(context);
       DialogUtils.showMessage(
         context: context,
