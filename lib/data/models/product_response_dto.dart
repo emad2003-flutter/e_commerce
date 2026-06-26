@@ -1,8 +1,8 @@
 import 'package:e_commerce/data/models/categories_or_brands_response_dto.dart';
 import 'package:e_commerce/domain/entities/product_response_entity.dart';
 
-class ProductResponseDm extends ProductResponseEntity {
-  ProductResponseDm({
+class ProductResponseDto extends ProductResponseEntity {
+  ProductResponseDto({
     super.results,
     super.productMetadataEntity,
     this.statusMsg,
@@ -10,17 +10,17 @@ class ProductResponseDm extends ProductResponseEntity {
     super.productEntity,
   });
 
-  ProductResponseDm.fromJson(dynamic json) {
+  ProductResponseDto.fromJson(dynamic json) {
     results = json['results'];
     message = json['message'];
     statusMsg = json['statusMsg'];
     productMetadataEntity = json['metadata'] != null
-        ? ProductMetadataDm.fromJson(json['metadata'])
+        ? ProductMetadataDto.fromJson(json['metadata'])
         : null;
     if (json['data'] != null) {
       productEntity = [];
       json['data'].forEach((v) {
-        productEntity?.add(ProductDm.fromJson(v));
+        productEntity?.add(ProductDto.fromJson(v));
       });
     }
   }
@@ -30,8 +30,8 @@ class ProductResponseDm extends ProductResponseEntity {
   String? message;
 }
 
-class ProductDm extends ProductEntity {
-  ProductDm({
+class ProductDto extends ProductEntity {
+  ProductDto({
     super.sold,
     super.images,
     super.subcategory,
@@ -50,13 +50,13 @@ class ProductDm extends ProductEntity {
     this.updatedAt,
   });
 
-  ProductDm.fromJson(dynamic json) {
+  ProductDto.fromJson(dynamic json) {
     sold = json['sold'];
     images = json['images'] != null ? json['images'].cast<String>() : [];
     if (json['subcategory'] != null) {
       subcategory = [];
       json['subcategory'].forEach((v) {
-        subcategory?.add(SubcategoryDm.fromJson(v));
+        subcategory?.add(SubcategoryDto.fromJson(v));
       });
     }
     ratingsQuantity = json['ratingsQuantity'];
@@ -83,10 +83,10 @@ class ProductDm extends ProductEntity {
   String? updatedAt;
 }
 
-class SubcategoryDm extends SubcategoryEntity {
-  SubcategoryDm({super.sId, super.name, super.slug, super.category});
+class SubcategoryDto extends SubcategoryEntity {
+  SubcategoryDto({super.sId, super.name, super.slug, super.category});
 
-  SubcategoryDm.fromJson(dynamic json) {
+  SubcategoryDto.fromJson(dynamic json) {
     sId = json['_id'];
     name = json['name'];
     slug = json['slug'];
@@ -94,15 +94,15 @@ class SubcategoryDm extends SubcategoryEntity {
   }
 }
 
-class ProductMetadataDm extends ProductMetadataEntity {
-  ProductMetadataDm({
+class ProductMetadataDto extends ProductMetadataEntity {
+  ProductMetadataDto({
     super.currentPage,
     super.numberOfPages,
     super.limit,
     super.nextPage,
   });
 
-  ProductMetadataDm.fromJson(dynamic json) {
+  ProductMetadataDto.fromJson(dynamic json) {
     currentPage = json['currentPage'];
     numberOfPages = json['numberOfPages'];
     limit = json['limit'];

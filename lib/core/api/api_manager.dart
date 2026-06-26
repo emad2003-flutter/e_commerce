@@ -21,12 +21,13 @@ class ApiManager {
     required String endPoint,
     Map<String, dynamic>? query,
     Object? data,
+    Map<String, dynamic>? headers,
   }) {
     return dio.post(
       ApiConstants.baseUrl + endPoint,
       queryParameters: query,
       data: data,
-      options: Options(validateStatus: (status) => true),
+      options: Options(headers: headers, validateStatus: (status) => true),
     );
   }
 }
