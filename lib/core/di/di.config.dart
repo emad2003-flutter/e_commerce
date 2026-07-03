@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+
 import '../../data/data_souces/remote/auth_remote_data_source.dart' as _i97;
 import '../../data/data_souces/remote/home_remote_data_source.dart' as _i567;
 import '../../data/data_souces/remote/impl/auth_remote_data_source_impl.dart'
@@ -21,6 +22,7 @@ import '../../data/repositories/auth/auth_repository_impl.dart' as _i24;
 import '../../data/repositories/home/home_repository_impl.dart' as _i161;
 import '../../domain/repositories/auth/auth_repository.dart' as _i660;
 import '../../domain/repositories/home/home_repository.dart' as _i22;
+import '../../domain/use_cases/add_order_to_card_use_case.dart' as _i706;
 import '../../domain/use_cases/categories_use_case.dart' as _i1057;
 import '../../domain/use_cases/get_all_brands_use_case.dart' as _i773;
 import '../../domain/use_cases/get_all_proudcts_use_case.dart' as _i354;
@@ -72,6 +74,11 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i873.RegisterViewModel(registerUseCase: gh<_i479.RegisterUseCase>()),
     );
+    gh.factory<_i706.AddOrderToCardUseCase>(
+      () => _i706.AddOrderToCardUseCase(
+        homeRepository: gh<_i22.HomeRepository>(),
+      ),
+    );
     gh.factory<_i1057.CategoriesUseCase>(
       () => _i1057.CategoriesUseCase(homeRepository: gh<_i22.HomeRepository>()),
     );
@@ -84,14 +91,17 @@ extension GetItInjectableX on _i174.GetIt {
         homeRepository: gh<_i22.HomeRepository>(),
       ),
     );
-    gh.factory<_i703.ProductsViewModel>(
-      () => _i703.ProductsViewModel(gh<_i354.GetAllProudctsUseCase>()),
-    );
     gh.factory<_i866.HomeViewModel>(
       () => _i866.HomeViewModel(gh<_i1057.CategoriesUseCase>()),
     );
     gh.factory<_i245.LoginViewModel>(
       () => _i245.LoginViewModel(loginUseCase: gh<_i471.LoginUseCase>()),
+    );
+    gh.factory<_i703.ProductsViewModel>(
+      () => _i703.ProductsViewModel(
+        gh<_i354.GetAllProudctsUseCase>(),
+        gh<_i706.AddOrderToCardUseCase>(),
+      ),
     );
     gh.factory<_i615.HomeTapViewModel>(
       () => _i615.HomeTapViewModel(

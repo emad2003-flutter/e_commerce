@@ -113,10 +113,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           .checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
+        final token = await SharedPrefHelper.getString(AppConsts.userToken);
         var response = await apiManager.postData(
           endPoint: EndPoints.addProductToCart,
           data: {"productId": productId},
-          headers: {"token": SharedPrefHelper.getString(AppConsts.userToken)},
+          headers: {"token": token},
         );
         var addToCardResponse = AddToCardResponseDto.fromJson(response.data);
 
