@@ -5,6 +5,7 @@ import 'package:e_commerce/core/utils/app_assets.dart';
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_consts.dart';
 import 'package:e_commerce/core/utils/app_styles.dart';
+import 'package:e_commerce/core/utils/flutter_toast.dart';
 import 'package:e_commerce/core/utils/shared_pref_helper.dart';
 import 'package:e_commerce/domain/entities/product_response_entity.dart';
 import 'package:e_commerce/features/ui/pages/home_screen/taps/products_tap/cubit/products_states.dart';
@@ -45,9 +46,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       bloc: viewModel,
       listener: (context, state) {
         if (state is AddToCardLoadedState) {
-          print('added to cart');
+          ToastMessage.toastMsg(
+            context,
+            'Order added successfully',
+            AppColors.primaryColor,
+            AppColors.whiteColor,
+          );
+          Navigator.of(context).pop();
         } else if (state is AddToCardErrorState) {
-          print('failed to add: ${state.message}');
+          ToastMessage.toastMsg(
+            context,
+            'Failed to add order: ${state.message}',
+            AppColors.redColor,
+            AppColors.whiteColor,
+          );
           SharedPrefHelper.getString(AppConsts.userToken).then((token) {
             print('token : $token');
           });

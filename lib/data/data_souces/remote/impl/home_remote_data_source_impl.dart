@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce/core/api/api_manager.dart';
 import 'package:e_commerce/core/api/end_points.dart';
 import 'package:e_commerce/core/errors/fialures.dart';
-import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_consts.dart';
 import 'package:e_commerce/core/utils/shared_pref_helper.dart';
 import 'package:e_commerce/data/data_souces/remote/home_remote_data_source.dart';
